@@ -109,6 +109,9 @@ namespace MixedReality.Toolkit.Accessibility
         /// A string describing the semantic usage of the object. Common semantics include:
         /// "login button", "rocking chair", etc.
         /// </summary>
+        /// <remarks>
+        /// Semantic text can be equated to the concept of altText describing web page images.
+        /// </remarks>
         public string Semantic => semantic;
 
         #region Monobehaviour methods
