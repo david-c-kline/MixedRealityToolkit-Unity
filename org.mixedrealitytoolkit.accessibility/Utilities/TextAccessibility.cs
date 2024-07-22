@@ -14,6 +14,25 @@ namespace MixedReality.Toolkit.Accessibility
     {
         private AccessibilitySubsystem accessibilitySubsystem = null;
         private Material material = null;
+        
+        [SerializeField]
+        [Tooltip("Object that represents the backplate on which the text will be displayed.")]
+        private GameObject backplate = null;
+
+        /// <summary>
+        /// </summary>
+        public GameObject Backplate
+        {
+            get => backplate;
+            set
+            {
+                if (backplate != value)
+                {
+                    backplate = value;
+                    // todo - need to handle backplate change
+                }
+            }
+        }
 
         /// <summary>
         /// Apply the initial configuration settings to the object.
@@ -21,6 +40,7 @@ namespace MixedReality.Toolkit.Accessibility
         private void ApplyInitialConfiguration()
         {
             OnInvertTextColorChanged(accessibilitySubsystem.InvertTextColor);
+            // todo OnTextBackgroundBehaviorChanged(accessibilitySubsystem.TextBackgroundBehaviorChanged);
         }
 
         /// <summary>
@@ -45,7 +65,7 @@ namespace MixedReality.Toolkit.Accessibility
         /// Handles <see cref="AccessibilitySubsystem.InvertTextColorChanged"/> events.
         /// </summary>
         /// <param name="invert">
-        /// TRue to apply text color inversion, or false.
+        /// True to apply text color inversion, or false.
         /// </param>
         private void OnInvertTextColorChanged(bool invert)
         {

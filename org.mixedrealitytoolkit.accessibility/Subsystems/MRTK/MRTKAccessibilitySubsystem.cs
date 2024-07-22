@@ -185,6 +185,44 @@ namespace MixedReality.Toolkit.Accessibility
 
             #endregion Accessible object management
 
+            #region Text backplate behavior
+
+            private TextBackplateBehavior textBackplateBehavior = TextBackplateBehavior.None; // todo: what is the most reasonable default?
+
+            /// <inheritdoc/>
+            public override TextBackplateBehavior TextBackplateBehavior
+            {
+                get => textBackplateBehavior;
+                set
+                {
+                    if (textBackplateBehavior != value)
+                    {
+                        textBackplateBehavior = value;
+                        RaiseTextBackplateBehaviorChanged(textBackplateBehavior);
+                    }
+                }
+            }
+
+            /// <inheritdoc/>
+            public override void ApplyTextBackplateBehavior(TextBackplateBehavior behavior)
+            {
+                // todo AccessibilityUtilities.SetTextColorInversion(enable);
+            }
+
+            /// <inheritdoc/>
+            public override event Action<TextBackplateBehavior> TextBackplateBehaviorChanged;
+            
+            /// <summary>
+            /// Sends a <see cref="TextBackplateBehaviorChanged"/> event to registered listeners.
+            /// </summary>
+            /// <param name="behavior">The behavior that is to be elicited by text objects.</param>
+            private void RaiseTextBackplateBehaviorChanged(TextBackplateBehavior behavior)
+            {
+                TextBackplateBehaviorChanged?.Invoke(behavior);
+            }
+
+            #endregion Text backplate behavior
+
             #region Text color inversion
 
             private bool invertTextColor = false;
@@ -207,9 +245,7 @@ namespace MixedReality.Toolkit.Accessibility
             public override event Action<bool> InvertTextColorChanged;
 
             /// <inheritdoc/>
-            public override void ApplyTextColorInversion(
-                Material material,
-                bool enable)
+            public override void ApplyTextColorInversion(Material material, bool enable)
             {
                 AccessibilityUtilities.SetTextColorInversion(material, enable);
             }

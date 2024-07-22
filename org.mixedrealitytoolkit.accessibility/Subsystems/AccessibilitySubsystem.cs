@@ -15,7 +15,7 @@ namespace MixedReality.Toolkit.Accessibility
     /// assistive technologies.
     /// </summary>
     [Preserve]
-    public class AccessibilitySubsystem :
+    public partial class AccessibilitySubsystem :
         MRTKSubsystem<AccessibilitySubsystem, AccessibilitySubsystemDescriptor, AccessibilitySubsystem.Provider>,
         IAccessibilitySubsystem
     {
@@ -33,8 +33,6 @@ namespace MixedReality.Toolkit.Accessibility
             MRTKSubsystemProvider<AccessibilitySubsystem>,
             IAccessibilitySubsystem
         {
-            #region IAccessibilitySubsystem implementation
-
             #region Accessible object management
 
             /// <summary>
@@ -63,6 +61,21 @@ namespace MixedReality.Toolkit.Accessibility
 
             #endregion Accessible object management
 
+            #region Text accessibility
+
+            #region Text backplate behavior
+
+            /// <inheritdoc/>
+            public abstract TextBackplateBehavior TextBackplateBehavior { get; set; }
+
+            /// <inheritdoc/>
+            public abstract event Action<TextBackplateBehavior> TextBackplateBehaviorChanged;
+
+            /// <inheritdoc/>
+            public abstract void ApplyTextBackplateBehavior(TextBackplateBehavior behavior);
+            
+            #endregion Text backplate behavior
+
             #region Text color inversion
 
             /// <inheritdoc/>
@@ -76,7 +89,7 @@ namespace MixedReality.Toolkit.Accessibility
 
             #endregion Text color inversion
 
-            #endregion IAccessibilitySubsystem implementation
+            #endregion Text accessibility
         }
 
         #region IAccessibilitySubsystem implementation
@@ -113,6 +126,29 @@ namespace MixedReality.Toolkit.Accessibility
 
         #endregion Accessible object management
 
+        #region Text accessibility
+
+        #region Text backplate behavior
+
+        /// <inheritdoc/>
+        public TextBackplateBehavior TextBackplateBehavior
+        {
+            get => provider.TextBackplateBehavior;
+            set => provider.TextBackplateBehavior = value;
+        }
+
+        /// <inheritdoc/>
+        public event Action<TextBackplateBehavior> TextBackplateBehaviorChanged
+        {
+            add => provider.TextBackplateBehaviorChanged += value;
+            remove => provider.TextBackplateBehaviorChanged -= value;
+        }
+        
+        /// <inheritdoc/>
+        public void ApplyTextBackplateBehavior(TextBackplateBehavior behavior) => provider.ApplyTextBackplateBehavior(behavior);
+            
+        #endregion Text backplate behavior
+
         #region Text color inversion
 
         /// <inheritdoc/>
@@ -130,11 +166,11 @@ namespace MixedReality.Toolkit.Accessibility
         }
 
         /// <inheritdoc/>
-        public void ApplyTextColorInversion(
-            Material material,
-            bool enable) => provider.ApplyTextColorInversion(material, enable);
+        public void ApplyTextColorInversion(Material material, bool enable) => provider.ApplyTextColorInversion(material, enable);
 
         #endregion Text color inversion
+
+        #endregion Text accessibility
 
         #endregion IAccessibilitySubsystem implementation
 

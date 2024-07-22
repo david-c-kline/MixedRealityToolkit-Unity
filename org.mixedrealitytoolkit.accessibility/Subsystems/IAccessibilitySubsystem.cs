@@ -12,7 +12,7 @@ namespace MixedReality.Toolkit.Accessibility
     /// subsystem and the associated provider must implement this interface, preferably with a direct mapping or wrapping between
     /// the provider surface and the subsystem surface.
     /// </summary>
-    public interface IAccessibilitySubsystem
+    public partial interface IAccessibilitySubsystem
     {
         #region Accessible object management
 
@@ -52,11 +52,43 @@ namespace MixedReality.Toolkit.Accessibility
 
         #endregion Accessible object management
 
+        #region Text accessibility
+
+        #region Text backplate behavior
+
+        /// <summary>
+        /// How should text backplates be displayed?
+        /// </summary>
+        /// <remarks>
+        /// This property applies to TextMeshPro objects with an attached <see cref="TextAccessibility"/> script.
+        /// </remarks>
+        TextBackplateBehavior TextBackplateBehavior { get; set; }
+
+        /// <summary>
+        /// Indicates that the value of <see cref="TextBackplateBehavior"/> has been changed.
+        /// </summary>
+        event Action<TextBackplateBehavior> TextBackplateBehaviorChanged;
+
+        /// <summary>
+        /// Provides a the behavior to be elicited by text backplates.
+        /// </summary>
+        /// <param name="behavior">The <see cref="TextBackplateBehavior"/> of the text backplate.</param>
+        /// <remarks>
+        /// This method requires the material to use the Text Mesh Pro shader which is
+        /// provided in the Microsoft Mixed Reality Toolkit Graphics Tools package.
+        /// </remarks>
+        void ApplyTextBackplateBehavior(TextBackplateBehavior behavior);
+
+        #endregion Text backplate behavior
+        
         #region Text color inversion
 
         /// <summary>
         /// Should text color inversion be enabled?
         /// </summary>
+        /// <remarks>
+        /// This property applies to TextMeshPro objects with an attached <see cref="TextAccessibility"/> script.
+        /// </remarks>
         bool InvertTextColor { get; set; }
 
         /// <summary>
@@ -65,7 +97,7 @@ namespace MixedReality.Toolkit.Accessibility
         event Action<bool> InvertTextColorChanged;
 
         /// <summary>
-        /// Provides a material which should have it's text color modified.
+        /// Enables or disables text color inversion.
         /// </summary>
         /// <param name="material">The material to which to apply text color inversion.</param>
         /// <param name="enable"><see langword="true"/> to enable inversion, or <see langword="false"/>.</param>
@@ -76,5 +108,7 @@ namespace MixedReality.Toolkit.Accessibility
         void ApplyTextColorInversion(Material material, bool enable);
 
         #endregion Text color inversion
+
+        #endregion Text accessibility
     }
 }
